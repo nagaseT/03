@@ -80,6 +80,7 @@ app.post('/login', function(req, res) {
     if (err) {
       return res.send('NG');
     }
+    // fail safe (安全側に倒す)
     if (!results) {
       return res.send('NG');
     }

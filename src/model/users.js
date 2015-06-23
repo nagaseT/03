@@ -1,7 +1,7 @@
 var fs = require('fs');
 
 module.exports.login = function login(username, password, callback) {
-  fs.readFile('./src/model/users.json', {encoding: 'utf-8'}, function(err, data) {
+  fs.readFile(__dirname + '/users.json', {encoding: 'utf-8'}, function(err, data) {
     if (err) {
       return callback(err);
     }
