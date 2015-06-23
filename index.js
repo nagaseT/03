@@ -1,6 +1,7 @@
 var express = require('express');
 var bodyParser = require('body-parser');
 var app = express();
+var login = require('./src/model/users');
 
 // setting
 app.set('views', './views');
@@ -72,15 +73,18 @@ app.get('/test', function(req, res) {
 });
 
 app.post('/login', function(req, res) {
-  var user = req.body;
-  if (!(user.username in users)) {
-    return res.send('NG');
-  }
-  if (user.password !== users[user.username]) {
-    return res.send('NG');
-  }
+  var username = req.body.username;
+  var password = req.body.password;
 
-  return res.send('OK');
+  login.login(username, password, function(err, results){
+    if (err) {
+      return res.send('NG');
+    }
+    if (!results) {
+      return res.send('NG');
+    }
+    return res.send('OK');
+  });
 });
 
 // server start
