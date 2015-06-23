@@ -72,13 +72,15 @@ app.get('/test', function(req, res) {
 });
 
 app.post('/login', function(req, res) {
-  console.log(req.body);
-  if (req.body.username in users) {
-    if (req.body.password === users[req.body.username]) {
-      return res.send('OK');
-    }
+  var user = req.body;
+  if (!(user.username in users)) {
+    return res.send('NG');
   }
-  return res.send('NG');
+  if (user.password !== users[user.username]) {
+    return res.send('NG');
+  }
+
+  return res.send('OK');
 });
 
 // server start
